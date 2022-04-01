@@ -93,7 +93,7 @@ namespace smcrypto
             sm4.sm4_setkey_enc(ctx, keyBytes);
             byte[] encrypted = sm4.sm4_crypt_cbc(ctx, ivBytes, Encoding.ASCII.GetBytes(plainText));
 
-            String cipherText = Encoding.ASCII.GetString(Hex.Encode(encrypted));
+            String cipherText = Convert.ToBase64String(encrypted);//Encoding.ASCII.GetString(Hex.Encode(encrypted));
             return cipherText;
         }
 
@@ -118,7 +118,7 @@ namespace smcrypto
 
             SM4 sm4 = new SM4();
             sm4.sm4_setkey_dec(ctx, keyBytes);
-            byte[] decrypted = sm4.sm4_crypt_cbc(ctx, ivBytes, Hex.Decode(cipherText));
+            byte[] decrypted = sm4.sm4_crypt_cbc(ctx, ivBytes, Convert.FromBase64String(cipherText));//sm4.sm4_crypt_cbc(ctx, ivBytes, Hex.Decode(cipherText));
             return Encoding.ASCII.GetString(decrypted);
         }
     }
